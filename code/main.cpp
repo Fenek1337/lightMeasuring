@@ -3,205 +3,155 @@
 #include <LiquidCrystal_I2C.h> //Implementacja biblioteki NewLiquidCrystal dla IC2
 
 
-const int  en = 2, rw = 1, rs = 0, d4 = 4, d5 = 5, d6 = 6, d7 = 7, bl = 3;//Zdefiniowanie Pinoutu LCD
+float lux_0=0.00,ADC_wartosc0=0.0048828125,LDR_wartosc0;//Definiowanie zmiennych
+float lux_1=0.00,ADC_wartosc1=0.0048828125,LDR_wartosc1;
+float lux_2=0.00,ADC_wartosc2=0.0048828125,LDR_wartosc2;
+float lux_3=0.00,ADC_wartosc3=0.0048828125,LDR_wartosc3;
+float lux_4=0.00,ADC_wartosc4=0.0048828125,LDR_wartosc4;
+float lux_5=0.00,ADC_wartosc5=0.0048828125,LDR_wartosc5;
+float lux_6=0.00,ADC_wartosc6=0.0048828125,LDR_wartosc6;
+float lux_7=0.00,ADC_wartosc7=0.0048828125,LDR_wartosc7;
+float lux_8=0.00,ADC_wartosc8=0.0048828125,LDR_wartosc8;
+float lux_9=0.00,ADC_wartosc9=0.0048828125,LDR_wartosc9;
+float lux_10=0.00,ADC_wartosc10=0.0048828125,LDR_wartosc10;
+float lux_11=0.00,ADC_wartosc11=0.0048828125,LDR_wartosc11;
+float lux_12=0.00,ADC_wartosc12=0.0048828125,LDR_wartosc12;
+float lux_13=0.00,ADC_wartosc13=0.0048828125,LDR_wartosc13;
+float lux_14=0.00,ADC_wartosc14=0.0048828125,LDR_wartosc14;
+float lux_15=0.00,ADC_wartosc15=0.0048828125,LDR_wartosc15;
 
-const int i2c_addr = 0x3F; //Zdefiniowanie adresu dla IC2,można zmienić
-// Definiowanie podłaczenia wyświetlacza
-LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // Ustawienie adresu ukladu na 0x27
-//Zmienne fotorezystory
-int fotorezystor0 = 0;
-int fotorezystor1 = 0;
-int fotorezystor2 = 0;
-int fotorezystor3 = 0;
-int fotorezystor4 = 0;
-int fotorezystor5 = 0;
-int fotorezystor6 = 0;
-int fotorezystor7 = 0;
-int fotorezystor8 = 0;
-int fotorezystor9 = 0;
-int fotorezystor10 = 0;
-int fotorezystor11 = 0;
-int fotorezystor12 = 0;
-int fotorezystor13 = 0;
-int fotorezystor14 = 0;
-int fotorezystor15 = 0;
-
-//Zmienne volty
-float volty0 = 0;
-float volty1 = 0;
-float volty2 = 0;
-float volty3 = 0;
-float volty4 = 0;
-float volty5 = 0;
-float volty6 = 0;
-float volty7 = 0;  
-float volty8 = 0;
-float volty9 = 0;
-float volty10 = 0;
-float volty11 = 0;
-float volty12 = 0;
-float volty13 = 0;
-float volty14 = 0;
-float volty15 = 0;
-
-//Srednia
-int srednia = 0;
-  
 void setup() {
-  // Port Szeregowy
-  Serial.begin(9600);
-  // Ustawianie LCD na 16 znaków ,4 wiersze.
-  lcd.begin(16,4);
-  lcd.backlight(); // zalaczenie podwietlenia
-  
+  pinMode(A0,INPUT);//Definiowanie pinów
+  pinMode(A1,INPUT);
+  pinMode(A2,INPUT);
+  pinMode(A3,INPUT);
+  pinMode(A4,INPUT);
+  pinMode(A5,INPUT);
+  pinMode(A6,INPUT);
+  pinMode(A7,INPUT);
+  pinMode(A8,INPUT);
+  pinMode(A9,INPUT);
+  pinMode(A10,INPUT);
+  pinMode(A11,INPUT);
+  pinMode(A12,INPUT);
+  pinMode(A13,INPUT);
+  pinMode(A14,INPUT);
+  pinMode(A15,INPUT);
+
+  Serial.begin(9600);//Inicjacja portu szeregowego (COM)
 }
 
 void loop() {
-  
-  lcd.backlight(); // zalaczenie podwietlenia
-  
-  //Odczytywanie wartosci z czujnikow
-  fotorezystor0 = analogRead(A0);
-  fotorezystor1 = analogRead(A1);
-  fotorezystor2 = analogRead(A2);
-  fotorezystor3 = analogRead(A3);
-  fotorezystor4 = analogRead(A4);
-  fotorezystor5 = analogRead(A5);
-  fotorezystor6 = analogRead(A6);
-  fotorezystor7 = analogRead(A7);
-  fotorezystor8 = analogRead(A8);
-  fotorezystor9 = analogRead(A9);
-  fotorezystor10 = analogRead(A10);
-  fotorezystor11 = analogRead(A11);
-  fotorezystor12 = analogRead(A12);
-  fotorezystor13 = analogRead(A13);
-  fotorezystor14 = analogRead(A14);
-  fotorezystor15 = analogRead(A15);
-  
-  //Zmienne volty po pomiarach
-  volty0 = fotorezystor0*0.004887585532746823069403714565;
-  volty1 = fotorezystor1*0.004887585532746823069403714565;
-  volty2 = fotorezystor2*0.004887585532746823069403714565;
-  volty3 = fotorezystor3*0.004887585532746823069403714565;
-  volty4 = fotorezystor4*0.004887585532746823069403714565;
-  volty5 = fotorezystor5*0.004887585532746823069403714565;
-  volty6 = fotorezystor6*0.004887585532746823069403714565;
-  volty7 = fotorezystor7*0.004887585532746823069403714565;
-  volty8 = fotorezystor8*0.004887585532746823069403714565;
-  volty9 = fotorezystor9*0.004887585532746823069403714565;
-  volty10 = fotorezystor10*0.004887585532746823069403714565;
-  volty11 = fotorezystor11*0.004887585532746823069403714565;
-  volty12 = fotorezystor12*0.004887585532746823069403714565;
-  volty13 = fotorezystor13*0.004887585532746823069403714565;
-  volty14 = fotorezystor14*0.004887585532746823069403714565;
-  volty15 = fotorezystor15*0.004887585532746823069403714565;
-  
-  //obliczanie sredniej
-  srednia=(fotorezystor0+fotorezystor1+fotorezystor2+fotorezystor3+fotorezystor4+fotorezystor5+fotorezystor6+fotorezystor7+fotorezystor8+fotorezystor9+fotorezystor10+fotorezystor11+fotorezystor12+fotorezystor13+fotorezystor14+fotorezystor15)/16;
-  
-  //Fotorezystor 0
-  Serial.println("Czujnik 1 = ");
-  Serial.print((500/((10.72/(5-volty0))*volty0)), 2); //wzor na obliczanie luxow
-  Serial.print(" Lux.");
-  Serial.println("");
 
-  //Fotorezystor 1
-  Serial.println("Czujnik 2 = ");
-  Serial.print((500/((10.72/(5-volty1))*volty1)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");
-
-  //Fotorezystor 2
-  Serial.println("Czujnik 3 = ");
-  Serial.print((500/((10.72/(5-volty2))*volty2)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");
-
-  //Fotorezystor 3
-  Serial.println("Czujnik 4 = ");
-  Serial.print((500/((10.72/(5-volty3))*volty3)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");
-
-  //Fotorezystor 4
-  Serial.println("Czujnik 5 = ");
-  Serial.print((500/((10.72/(5-volty4))*volty4)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");
-
-  //Fotorezystor 5
-  Serial.println("Czujnik 6 = ");
-  Serial.print((500/((10.72/(5-volty5))*volty5)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");
-
-  //Fotorezystor 6
-  Serial.println("Czujnik 7 = ");
-  Serial.print((500/((10.72/(5-volty6))*volty6)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");
-
-  //Fotorezystor 7
-  Serial.println("Czujnik 8 = ");
-  Serial.print((500/((10.72/(5-volty7))*volty7)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");
-
-  //Fotorezystor 8
-  Serial.println("Czujnik 9 = ");
-  Serial.print((500/((10.72/(5-volty8))*volty8)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");
-
-  //Fotorezystor 9
-  Serial.println("Czujnik 10 = ");
-  Serial.print((500/((10.72/(5-volty9))*volty9)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");
   
-  //Fotorezystor 10
-  Serial.println("Czujnik 11 = ");
-  Serial.print((500/((10.72/(5-volty10))*volty10)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");
-  
-  //Fotorezystor 11
-  Serial.println("Czujnik 12 = ");
-  Serial.print((500/((10.72/(5-volty11))*volty11)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");  
-  
-  //Fotorezystor 12
-  Serial.println("Czujnik 13 = ");
-  Serial.print((500/((10.72/(5-volty12))*volty12)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");
-  
-  //Fotorezystor 13
-  Serial.println("Czujnik 14 = ");
-  Serial.print((500/((10.72/(5-volty13))*volty13)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");
-  
-  //Fotorezystor 14
-  Serial.println("Czujnik 15 = ");
-  Serial.print((500/((10.72/(5-volty14))*volty14)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");
-  
-  //Fotorezystor 15
-  Serial.println("Czujnik 16 = ");
-  Serial.print((500/((10.72/(5-volty15))*volty15)), 2);
-  Serial.print(" Lux.");
-  Serial.println("");
-  
-  //Srednia
-  Serial.println("Srednia = ");
-  Serial.print(srednia);
-  Serial.print(" Lux.");
-  Serial.println("");
-  
-  delay(30000); //czeka na kolejne pomiary - 30 sekund.
+  LDR_wartosc0=analogRead(A0);
+  lux_0=(250.000000/
+  (ADC_wartosc0*LDR_wartosc0))-50.000000;
+  Serial.print("Wartosc Czujnika 0 =");
+  Serial.print(lux_0);
+
+
+  LDR_wartosc1=analogRead(A1);
+  lux_1=(250.000000/
+  (ADC_wartosc1*LDR_wartosc1))-50.000000;
+  Serial.print("Wartosc Czujnika 1 =");
+  Serial.print(lux_1);
+
+
+  LDR_wartosc2=analogRead(A2);
+  lux_2=(250.000000/
+  (ADC_wartosc2*LDR_wartosc2))-50.000000;
+  Serial.print("Wartosc Czujnika 2 =");
+  Serial.print(lux_2);
+
+  LDR_wartosc3=analogRead(A3);
+  lux_3=(250.000000/
+  (ADC_wartosc3*LDR_wartosc3))-50.000000;
+  Serial.print("Wartosc Czujnika 3 =");
+  Serial.print(lux_3);
+
+
+  LDR_wartosc4=analogRead(A4);
+  lux_4=(250.000000/
+  (ADC_wartosc4*LDR_wartosc4))-50.000000;
+  Serial.print("Wartosc Czujnika 4 =");
+  Serial.print(lux_4);
+
+
+  LDR_wartosc5=analogRead(A5);
+  lux_5=(250.000000/
+  (ADC_wartosc5*LDR_wartosc5))-50.000000;
+  Serial.print("Wartosc Czujnika 5 =");
+  Serial.print(lux_5);
+
+
+  LDR_wartosc6=analogRead(A6);
+  lux_6=(250.000000/
+  (ADC_wartosc6*LDR_wartosc6))-50.000000;
+  Serial.print("Wartosc Czujnika 6 =");
+  Serial.print(lux_6);
+
+  LDR_wartosc7=analogRead(A7);
+  lux_7=(250.000000/
+  (ADC_wartosc1*LDR_wartosc1))-50.000000;
+  Serial.print("Wartosc Czujnika 7 =");
+  Serial.print(lux_7);
+
+
+  LDR_wartosc8=analogRead(A8);
+  lux_8=(250.000000/
+  (ADC_wartosc8*LDR_wartosc8))-50.000000;
+  Serial.print("Wartosc Czujnika 8 =");
+  Serial.print(lux_8);
+
+
+  LDR_wartosc9=analogRead(A9);
+  lux_9=(250.000000/
+  (ADC_wartosc9*LDR_wartosc9))-50.000000;
+  Serial.print("Wartosc Czujnika 9 =");
+  Serial.print(lux_9);
+
+  LDR_wartosc10=analogRead(A10);
+  lux_10=(250.000000/
+  (ADC_wartosc1*LDR_wartosc10))-50.000000;
+  Serial.print("Wartosc Czujnika 10 =");
+  Serial.print(lux_10);
+
+  LDR_wartosc11=analogRead(A11);
+  lux_11=(250.000000/
+  (ADC_wartosc11*LDR_wartosc11))-50.000000;
+  Serial.print("Wartosc Czujnika 11 =");
+  Serial.print(lux_11);
+
+
+  LDR_wartosc12=analogRead(A12);
+  lux_12=(250.000000/
+  (ADC_wartosc12*LDR_wartosc12))-50.000000;
+  Serial.print("Wartosc Czujnika 12 =");
+  Serial.print(lux_12);
+
+
+  LDR_wartosc13=analogRead(A13);
+  lux_13=(250.000000/
+  (ADC_wartosc13*LDR_wartosc13))-50.000000;
+  Serial.print("Wartosc Czujnika 13 =");
+  Serial.print(lux_13);
+
+
+  LDR_wartosc14=analogRead(A14);
+  lux_14=(250.000000/
+  (ADC_wartosc14*LDR_wartosc14))-50.000000;
+  Serial.print("Wartosc Czujnika 14 =");
+  Serial.print(lux_14);
+
+
+  LDR_wartosc15=analogRead(A15);
+  lux_15=(250.000000/
+  (ADC_wartosc15*LDR_wartosc15))-50.000000;
+  Serial.print("Wartosc Czujnika 15 =");
+  Serial.print(lux_15);
+}
+
 
 //Tabela
 // 0,002 lux - Bezksięzycowe bezchmurne niebo nocne 
