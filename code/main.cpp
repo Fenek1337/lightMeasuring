@@ -150,8 +150,9 @@ void loop() {
   (ADC_wartosc15*LDR_wartosc15))-50.000000;
   Serial.print("Wartosc Czujnika 15 =");
   Serial.print(lux_15);
-}
 
+  delay(30000); //czeka na kolejne pomiary - 30 sekund
+}
 
 //Tabela
 // 0,002 lux - Bezksięzycowe bezchmurne niebo nocne 
