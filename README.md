@@ -6,3 +6,8 @@ Like for now our project has two versions differing in used components, principl
 First version is based on [Arduino Mega 2560](https://store.arduino.cc/arduino-mega-2560-rev3) and sixteen mini photocells connected by ethernet cable with modified wiring.
 ### [secondVersion](https://github.com/burzynnn/lightMeasuring/tree/secondVersion)
 Second version is based on [Raspberry Pi 3B+](https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/) and sixteen [light sensors](https://github.com/claws/BH1750) connected by WiFi network.
+## Members 
+- Michał Durski ([WounderDragon](https://github.com/WounderDragon)) / ctzg12@gmail.com
+- Jakub Burzyński ([burzynnn](https://github.com/burzynnn)) / kubatkh@gmail.com 
+- Mateusz Kosmalski / error.mk85@gmail.com
+- Daniel Bober / danielb.fenek@op.pl
