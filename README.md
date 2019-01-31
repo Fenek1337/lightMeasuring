@@ -13,7 +13,7 @@ Second version is based on [Raspberry Pi 3B+](https://www.raspberrypi.org/produc
 ### members 
 - Michał Durski ([WounderDragon](https://github.com/WounderDragon)) / ctzg12@gmail.com
 - Jakub Burzyński ([burzynnn](https://github.com/burzynnn)) / kubatkh@gmail.com 
-- Mateusz Kosmalski / error.mk85@gmail.com
+- Mateusz Kosmalski  ([K05m0](https://github.com/K05m0)) / error.mk85@gmail.com
 - Daniel Bober / danielb.fenek@op.pl
 ## polish
 ### wprowadzenie
@@ -27,5 +27,5 @@ Druga wersja oparta jest o [Raspberry Pi 3B+](https://www.raspberrypi.org/produc
 ### członkowie
 - Michał Durski ([WounderDragon](https://github.com/WounderDragon)) / ctzg12@gmail.com
 - Jakub Burzyński ([burzynnn](https://github.com/burzynnn)) / kubatkh@gmail.com 
-- Mateusz Kosmalski / error.mk85@gmail.com
+- Mateusz Kosmalski ([K05m0](https://github.com/K05m0)) / error.mk85@gmail.com
 - Daniel Bober / danielb.fenek@op.pl
