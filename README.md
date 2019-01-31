@@ -23,7 +23,7 @@ Obecnie nasz projekt składa się z dwóch wersji, które różnią się od sieb
 #### [pierwszaWersja](https://github.com/burzynnn/lightMeasuring/tree/firstVersion)
 Pierwsza wersja oparta jest o [Arduino Mega 2560](https://store.arduino.cc/arduino-mega-2560-rev3) i szesnaście fotorezystorów połączonych z mikrokontrolerem za pomocą "skrętki" ze zmienionym zakończeniem przewodów.
 #### [drugaWersja](https://github.com/burzynnn/lightMeasuring/tree/secondVersion)
-Druga wersja oparta jest o [Raspberry Pi 3B+](https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/) i szesnaście [light sensors](https://github.com/claws/BH1750) połączonych z centralą za pomocą sieci WiFi.
+Druga wersja oparta jest o [Raspberry Pi 3B+](https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/) i szesnaście [czujników światła](https://github.com/claws/BH1750) połączonych z centralą za pomocą sieci WiFi.
 ### członkowie
 - Michał Durski ([WounderDragon](https://github.com/WounderDragon)) / ctzg12@gmail.com
 - Jakub Burzyński ([burzynnn](https://github.com/burzynnn)) / kubatkh@gmail.com 
