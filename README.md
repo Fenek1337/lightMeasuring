@@ -14,7 +14,7 @@ Second version is based on [Raspberry Pi 3B+](https://www.raspberrypi.org/produc
 - Michał Durski ([WounderDragon](https://github.com/WounderDragon)) / ctzg12@gmail.com
 - Jakub Burzyński ([burzynnn](https://github.com/burzynnn)) / kubatkh@gmail.com 
 - Mateusz Kosmalski  ([K05m0](https://github.com/K05m0)) / error.mk85@gmail.com
-- Daniel Bober / danielb.fenek@op.pl
+- Daniel Bober ([Fenek1337](https://github.com/Fenek1337)) / danielb.fenek@op.pl
 ## polish
 ### wprowadzenie
 To jest repozytorium naszego projektu o mierzeniu światła. Konfiguracja opiera się o szesnaście czujników światła i jakiś komputer, służący do wyświetlania wyników pomiarów. Naszym celem jest stworzenie bezprzewodowych czujników, następnie połączenie całego projektu z istniejącą instalacją [KNX](https://www.knx.org/knx-en/for-professionals/index.php).
@@ -28,4 +28,4 @@ Druga wersja oparta jest o [Raspberry Pi 3B+](https://www.raspberrypi.org/produc
 - Michał Durski ([WounderDragon](https://github.com/WounderDragon)) / ctzg12@gmail.com
 - Jakub Burzyński ([burzynnn](https://github.com/burzynnn)) / kubatkh@gmail.com 
 - Mateusz Kosmalski ([K05m0](https://github.com/K05m0)) / error.mk85@gmail.com
-- Daniel Bober / danielb.fenek@op.pl
+- Daniel Bober ([Fenek1337](https://github.com/Fenek1337)) / danielb.fenek@op.pl
