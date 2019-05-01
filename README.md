@@ -16,3 +16,15 @@ This the repository of our project which focuses on light measuring. It's based 
 - orange [CE]
  
 - red [GND]
+
+## connect scheme of BH1750 and Arduino Leonardo
+
+- /- [ADDR]
+
+- gray [SDA]
+
+- white [SDL]
+
+- black [GND]
+
+- gold [VCC]
