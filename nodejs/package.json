@@ -1,0 +1,18 @@
+{
+  "name": "lightmeasuring",
+  "version": "1.0.0",
+  "description": "Simple project about measuring light ",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "burzynnn",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.6.5",
+    "mqtt": "^3.0.0",
+    "path": "^0.12.7",
+    "socket.io": "^2.2.0"
+  }
+}
