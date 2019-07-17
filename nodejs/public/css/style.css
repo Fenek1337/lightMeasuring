@@ -1,0 +1,22 @@
+body {
+  background: #263238;
+  margin: 0;
+  padding: 0;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 50% 50%;
+      grid-template-columns: 50% 50%;
+  grid-auto-rows: repeat(9, 400px);
+}
+
+body .container {
+  width: 98%;
+  margin-left: 3%;
+  margin-right: 3%;
+  margin: auto;
+}
+
+body .container .canvas {
+  display: block;
+}
+/*# sourceMappingURL=style.css.map */

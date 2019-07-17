@@ -1,0 +1,21 @@
+body {
+    background: rgba(38, 50, 56, 1);
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-auto-rows: repeat(9, 400px);
+
+    .container {
+        width: 98%;
+        margin-left: 3%;
+        margin-right: 3%;
+        margin: auto;
+
+        .canvas {
+            display: block;
+        }
+    }
+
+
+}
