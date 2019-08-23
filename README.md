@@ -2,7 +2,7 @@
 ## introduction
   Repository of the school project about measuring actual light level. Basic configuration includes sixteen light sensors and central which connects all of measurers and process their's data. Our actual goal is to make devices communicate wireless, then connect whole configuration to existing [KNX](https://www.knx.org/knx-en/for-professionals/index.php) build in one of school clases.
 ## versions
-As of today, our project consists of two versions different by used components, technologies and programming languages.
+As of today, our project consists of two versions different by used components, technologies and programming languages. Explore them if you need to know more. 
 ### [firstVersion](https://github.com/burzynnn/lightMeasuring/tree/firstVersion)
   First version is based on [Arduino Mega 2560](https://store.arduino.cc/arduino-mega-2560-rev3) and sixteen mini photocells connected with microcontroller by ethernet cable with modified wiring.
 ### [secondVersion](https://github.com/burzynnn/lightMeasuring/tree/secondVersion)
