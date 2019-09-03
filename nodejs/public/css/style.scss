@@ -11,11 +11,21 @@ body {
         margin-left: 3%;
         margin-right: 3%;
         margin: auto;
+        position: relative;
+        z-index: 1;
 
         .canvas {
             display: block;
         }
+
+        .error {
+            color: #ff5733;
+            position: absolute;
+            font-size: 25px;
+            z-index: 9999;
+            bottom: 160px;
+            left: 250px;
+            font-weight: bold;
+        }
     }
-
-
 }
