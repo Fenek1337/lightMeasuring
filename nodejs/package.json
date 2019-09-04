@@ -2,13 +2,53 @@
     "name": "lightmeasuring",
     "version": "2.1.0",
     "description": "Simple project about measuring light",
+    "keywords": [
+        "light",
+        "measuring",
+        "knx",
+        "raspberry-pi-3b",
+        "light-sensors",
+        "nodejs",
+        "express",
+        "mongodb",
+        "mongoose",
+        "socket-io",
+        "cpp",
+        "mqtt",
+        "mvc",
+        "esp8266",
+        "arduino"
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/burzynnn/lightMeasuring#lightmeasuring",
+    "bugs": "https://github.com/burzynnn/lightMeasuring/issues",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/burzynnn/lightMeasuring/tree/additional-features-with-use-of-ethernet"
+    },
+    "contributors": [
+        {
+            "name": "Michał Durski",
+            "url": "https://github.com/WounderDragon"
+        },
+        {
+            "name": "Jakub Burzyński",
+            "url": "https://github.com/burzynnn"
+        },
+        {
+            "name": "Mateusz Kosmalski",
+            "url": "https://github.com/K05m0"
+        },
+        {
+            "name": "Daniel Bober",
+            "url": "https://github.com/Fenek1337"
+        }
+    ],
     "main": "app.js",
     "scripts": {
         "start": "node app.js",
         "dev": "nodemon app.js"
     },
-    "author": "burzynnn",
-    "license": "ISC",
     "dependencies": {
         "chalk": "^2.4.2",
         "dotenv": "^8.1.0",
@@ -21,10 +61,7 @@
         "pug": "^2.0.4",
         "socket.io": "^2.2.0"
     },
-    "keywords": [
-        "light",
-        "measuring",
-        "mqtt",
-        "nodejs"
-    ]
+    "devDependencies": {
+        "nodemon": "^1.19.2"
+    }
 }
