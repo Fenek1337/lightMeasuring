@@ -26,13 +26,14 @@ const app = express();
 // define actual time
 const now = `[${moment().format("HH:mm:s | DD-M-YYYY")}]`;
 
-// define logging function
 /**
+ * @description Improves logs to console
  *
- *
- * @param {string} [type="info"]
- * @param {string} [app="server"]
- * @param {*} text
+ * @param {string} [type="info"] Type determining variation of log
+ * @param {string} [app="server"] App from log is coming
+ * @param {string} text Text that will appear in console
+ * 
+ * @example log("error", "mongoose", "Connected to DB.")
  */
 function log(type = "info", app = "server", text) {
     if (type === "error") {
