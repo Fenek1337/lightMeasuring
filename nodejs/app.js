@@ -23,6 +23,33 @@ const PORT = process.env.SRV_PORT || 3000;
 // initialize express
 const app = express();
 
+// define actual time
+const now = `[${moment().format("HH:mm:s | DD-M-YYYY")}]`;
+
+// define logging function
+/**
+ *
+ *
+ * @param {string} [type="info"]
+ * @param {string} [app="server"]
+ * @param {*} text
+ */
+function log(type = "info", app = "server", text) {
+    if (type === "error") {
+        console.error(`${chalk.cyan(now)} ${chalk.red(type)} ${chalk.magentaBright(`${app}:`)} ${text}`);
+    } else {
+        console.log(`${chalk.cyan(now)} ${chalk.green(type)} ${chalk.magentaBright(`${app}:`)} ${text}`);
+    }
+}
+
+// handle process close
+process.on("SIGINT" || "SIGTERM", () => {
+    mongoose.connection.close(() => {
+        log("info", "mongoose", "Disconnected from DB and shutdown server.");
+        process.exit(0);
+    });
+});
+
 //* middlewares
 // setup body parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -40,17 +67,17 @@ app.use("/", mainRoutes);
 mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true });
 
 // notify on connection with db
-mongoose.connection.on("connected", () => console.log("Successfully connected to DB."));
+mongoose.connection.on("connected", () => log("info", "mongoose", "Successfully connected to DB."));
 
 // notify on reconnection with db
-mongoose.connection.on("reconnected", () => console.log("Reconnected to DB."));
+mongoose.connection.on("reconnected", () => log("info", "mongoose", "Reconnected to DB."));
 
 // notify on disconnection with db
-mongoose.connection.on("disconnected", () => console.log("Disconnected from DB."));
+mongoose.connection.on("disconnected", () => log("info", "mongoose", "Disconnected from DB."));
 
 // notify in case of error
 mongoose.connection.on("error", err => {
-    console.log(`Error happened while connecting to DB: ${err}.`);
+    log("error", "mongoose", `Error happened while connecting to DB: ${err}.`);
     process.exit(1);
 });
 
@@ -65,11 +92,12 @@ const mqttClient = mqtt.connect(process.env.MQTT_CONNECTION);
 
 // subscribe to topic
 mqttClient.on("connect", () => {
+    log("info", "mqtt", "Connected with MQTT Broker.");
     mqttClient.subscribe("lux");
 });
 
 // launch server
-server.listen(PORT, () => console.log(`Server up and running on port ${PORT}.`));
+server.listen(PORT, () => log("info", "server", `Server up and running on port ${PORT}.`));
 
 //* exports
 module.exports = { mqttClient, io };
