@@ -15,6 +15,7 @@ const moment = require("moment");
 
 //import routes
 const mainRoutes = require(path.join(__dirname, "routes", "mainRoutes.js"));
+const errorRoutes = require(path.join(__dirname, "routes", "errorRoutes.js"));
 
 //* variables
 // define server port
@@ -24,7 +25,7 @@ const PORT = process.env.SRV_PORT || 3000;
 const app = express();
 
 // define actual time
-const now = `[${moment().format("HH:mm:s | DD-M-YYYY")}]`;
+const now = `[${moment().format("HH:mm:ss | DD-M-YYYY")}]`;
 
 /**
  * @description Improves logs to console
@@ -56,12 +57,16 @@ process.on("SIGINT" || "SIGTERM", () => {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//set public folder
+app.use(express.static(path.join(__dirname, "public")));
+
 // set view engine
 app.set("views", path.join(__dirname, "public", "views"));
 app.set("view engine", "pug");
 
 // set routes
 app.use("/", mainRoutes);
+app.use("*", errorRoutes);
 
 //* services
 // connect to db
