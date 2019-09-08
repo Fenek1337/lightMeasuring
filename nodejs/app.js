@@ -17,6 +17,9 @@ const moment = require("moment");
 const mainRoutes = require(path.join(__dirname, "routes", "mainRoutes.js"));
 const errorRoutes = require(path.join(__dirname, "routes", "errorRoutes.js"));
 
+//import schema of measurement db saving
+const measurementSchema = require(path.join(__dirname, "models", "measurementModel.js"));
+
 //* variables
 // define server port
 const PORT = process.env.SRV_PORT || 3000;
@@ -95,7 +98,7 @@ mongoose.connection.on("error", err => {
 const server = http.createServer(app);
 
 // socketio by http instance
-const io = socketio(server).sockets;
+const io = socketio.listen(server).sockets;
 
 io.on("connection", () => {
     log("info", "socket.io", "Established connection with client");
@@ -108,6 +111,18 @@ const mqttClient = mqtt.connect(process.env.MQTT_CONNECTION);
 mqttClient.on("connect", () => {
     log("info", "mqtt", "Connected with MQTT Broker.");
     mqttClient.subscribe("lux");
+});
+
+mqttClient.on("message", (topic, message) => {
+    const messageObject = JSON.parse(String(message));
+    messageObject.measurement = Number(Math.round(parseFloat(messageObject.measurement + 'e' + 2)) + 'e-' + 2)
+    const messageToSave = new measurementSchema({
+        deviceNameShort: messageObject.sensorShort,
+        deviceNameLong: messageObject.sensorLong,
+        value: messageObject.measurement
+    });
+    messageToSave.save();
+    io.emit("lux", messageObject);
 });
 
 // launch server
