@@ -25,7 +25,11 @@ const PORT = process.env.SRV_PORT || 3000;
 const app = express();
 
 // define actual time
-const now = `[${moment().format("HH:mm:ss | DD-M-YYYY")}]`;
+let now = `[${moment().format("HH:mm:ss | DD-M-YYYY")}]`;
+function updateTime() {
+    now = `[${moment().format("HH:mm:ss | DD-M-YYYY")}]`;
+}
+setInterval(updateTime, 1000);
 
 /**
  * @description Improves logs to console
@@ -92,6 +96,10 @@ const server = http.createServer(app);
 
 // socketio by http instance
 const io = socketio(server).sockets;
+
+io.on("connection", () => {
+    log("info", "socket.io", "Established connection with client");
+});
 
 // connect to mqtt broker
 const mqttClient = mqtt.connect(process.env.MQTT_CONNECTION);
