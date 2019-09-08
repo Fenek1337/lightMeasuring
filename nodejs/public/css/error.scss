@@ -1,0 +1,19 @@
+@import "base";
+
+h1 {
+    color: $font-color;
+    padding: 3rem 3rem 1rem;
+    font-size: 3.5rem;
+}
+
+p {
+    color: $font-color;
+    padding: 1.5rem 3rem;
+    font-size: 1.7rem;
+}
+
+a {
+    color: $link-color;
+    font-size: 1.7rem;
+    text-decoration: none;
+}

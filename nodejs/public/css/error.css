@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+}
+
+body {
+  background: #303952;
+}
+
+h1 {
+  color: #ecf0f1;
+  padding: 3rem 3rem 1rem;
+  font-size: 3.5rem;
+}
+
+p {
+  color: #ecf0f1;
+  padding: 1.5rem 3rem;
+  font-size: 1.7rem;
+}
+
+a {
+  color: #33d9b2;
+  font-size: 1.7rem;
+  text-decoration: none;
+}
+/*# sourceMappingURL=error.css.map */

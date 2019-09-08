@@ -1,0 +1,37 @@
+@import "base";
+
+main {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-auto-rows: repeat(8, 400px);
+
+    .container {
+        width: 95%;
+        margin-left: 3%;
+        margin-right: 3%;
+        margin: auto;
+        position: relative;
+        z-index: 1;
+
+        .canvas {
+            display: block;
+        }
+
+        .error {
+            color: #ff5733;
+            position: absolute;
+            font-size: 25px;
+            z-index: 9999;
+            bottom: 160px;
+            left: 250px;
+            font-weight: bold;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 100%;
+        grid-auto-rows: repeat(16, 400px);
+    }
+}
