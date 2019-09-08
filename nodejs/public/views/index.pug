@@ -1,6 +1,15 @@
 extends layouts/default.pug
 
 block content
+    nav
+        button(class="button left") <
+        h1 lightMeasuring
+        form(action="/send-measurements", method="POST")
+            input(type="radio", name="side", value="L" id="radio-left" class="radio")
+            label(for="radio-left") Left side
+            input(type="radio", name="side", value="R" id="radio-right" class="radio")
+            label(for="radio-right") Right side
+        button(class="button right") >
     main
         -for (var i = 0; i < 16; i++) 
             .container
