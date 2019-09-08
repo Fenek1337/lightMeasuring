@@ -7,24 +7,25 @@
 #define wifi_ssid "lightMeasuring2G"
 #define wifi_password "mJmD2018"
 #define mqtt_server "192.168.1.3"
-#define lux_topic "lux2"
 #define sleepTime 10
+#define sensorShort 4
+#define sensorLong "ESP8266Fourth"
 
 BH1750 lightMeter;
 WiFiClient espClient;
 PubSubClient client(espClient);
 
 float lux;
-//IPAddress ip(192, 168, 1, 4);
-//IPAddress gateway(192, 168, 1, 1);
-//IPAddress subnet(255, 255, 255, 0);
+IPAddress ip(192, 168, 1, 6);
+IPAddress gateway(192, 168, 1, 1);
+IPAddress subnet(255, 255, 255, 0);
 
 void setup_wifi() {
   delay(10);
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(wifi_ssid);
-   //WiFi.config(ip, gateway, subnet);
+  WiFi.config(ip, gateway, subnet);
   WiFi.begin(wifi_ssid, wifi_password);
  
   while (WiFi.status() != WL_CONNECTED) {
@@ -42,7 +43,7 @@ void reconnect() {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
     // If you do not want to use a username and password, change next line to
-    if (client.connect("ESP8266second")) {
+    if (client.connect(sensorLong)) {
     // if (client.connect("ESP8266Client", mqtt_user, mqtt_password)) {
       Serial.println("connected");
     } else {
@@ -56,13 +57,14 @@ void reconnect() {
 }
 
 void publishLux() {
-    client.publish(lux_topic, String(lux).c_str(), true);
+    
 }
 
 void updateLux() {
   // Reading temperature or humidity takes about 250 milliseconds!
   // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
   lux = lightMeter.readLightLevel();
+  Serial.println(lux);
  
     // Check if any reads failed and exit early (to try again).
   if (isnan(lux)){
@@ -83,8 +85,10 @@ void setup(){
   setup_wifi();
   client.setServer(mqtt_server, 1883);
   Serial.println(F("BH1750 Test"));
-
+  
 }
+
+
 
 void loop() {
   if (!client.connected()) 
@@ -92,12 +96,22 @@ void loop() {
     reconnect();
   }
   client.loop();
- 
+
   // update the temperature and humidity
   updateLux();
+
+StaticJsonBuffer<300> JSONbuffer;
+  JsonObject& message = JSONbuffer.createObject();
+ 
+  message["sensorShort"] = sensorShort;
+  message["sensorLong"] = sensorLong;
+  message["measurement"] = lux;
+ 
+  char JSONmessageBuffer[100];
+  message.printTo(JSONmessageBuffer, sizeof(JSONmessageBuffer));
  
   // publish the temperature and humidity
-  publishLux();
+  client.publish("lux", JSONmessageBuffer, true);
   // wait some time
   delay(sleepTime * 100);
 }
