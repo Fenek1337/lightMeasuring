@@ -115,7 +115,7 @@ mqttClient.on("connect", () => {
 
 mqttClient.on("message", (topic, message) => {
     const messageObject = JSON.parse(String(message));
-    messageObject.measurement = Number(Math.round(parseFloat(messageObject.measurement + 'e' + 2)) + 'e-' + 2)
+    messageObject.measurement = Number(messageObject.measurement).toFixed(2);
     const messageToSave = new measurementSchema({
         deviceNameShort: messageObject.sensorShort,
         deviceNameLong: messageObject.sensorLong,
