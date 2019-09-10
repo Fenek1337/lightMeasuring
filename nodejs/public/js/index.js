@@ -110,19 +110,40 @@ for (let arr in queries) {
     }
     i = 0;
 }
+const buttonLeft = document.getElementById("left");
+const buttonRight = document.getElementById("right");
+const buttonSubmit = document.getElementById("submit");
+const form = document.getElementById("form");
+
+
 
 socket.on("connect", () => {
     socket.on("lux", (data) => {
         manageCharts(charts[data.sensorShort - 1], data.measurement);
     });
+
+
 });
+
 let pos = "left";
 
-const buttonLeft = document.getElementById("left");
-const buttonRight = document.getElementById("right");
-const buttonSubmit = document.getElementById("submit");
 
-buttonSubmit.addEventListener("click", () => console.log("clicked"));
+
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const emailValues = {};
+    for (let k = 0; k < charts.length; k++) {
+        if (charts[k].data.datasets[0].data[charts[k].data.datasets[0].data.length - 1] === undefined) {
+            emailValues[k] = "Value inside chart not found";
+        } else {
+            emailValues[k] = charts[k].data.datasets[0].data[charts[k].data.datasets[0].data.length - 1];
+        }
+
+    }
+    emailValues.side = document.querySelector('input[name="side"]:checked').value;
+    socket.emit("send-mail", emailValues);
+});
+
 buttonLeft.addEventListener("click", () => {
     if (pos === "right") {
         window.scrollBy(-window.innerWidth, 0);
@@ -141,4 +162,5 @@ buttonRight.addEventListener("click", () => {
         buttonSubmit.classList.add("red");
     }
 });
+
 
