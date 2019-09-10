@@ -1,20 +1,41 @@
 extends layouts/default.pug
 
+block script
+    script.
+        const titlePage = !{JSON.stringify(title)};
+        const queries = !{JSON.stringify(queries)};
+
 block content
     nav
-        button(class="button left") <
-        h1 lightMeasuring
-        form(action="/send-measurements", method="POST")
-            input(type="radio", name="side", value="L" id="radio-left" class="radio")
-            label(for="radio-left") Left side
-            input(type="radio", name="side", value="R" id="radio-right" class="radio")
-            label(for="radio-right") Right side
-        button(class="button right") >
+        ul
+            li
+                button(class="button" id="left") <
+            li
+                h1 #{title}
+            li
+                form(action="/send-measurements", method="POST")
+                    input(type="radio", name="side", value="L" id="radio-left" class="radio" required)
+                    label(for="radio-left") Left side
+                    input(type="radio", name="side", value="R" id="radio-right" class="radio")
+                    label(for="radio-right") Right side
+                    button(type="submit" id="submit") Send email
+            li
+                button(class="button" id="right") >
     main
-        -for (var i = 0; i < 16; i++) 
-            .container
-                canvas(id="chart"+(i+1), class="canvas")
-        script(src="/js/libraries/socket.io.js")
-        script(src="/js/libraries/Chart.bundle.min.js")
-        script(src="/js/libraries/chartjs-plugin-datalabels.min.js")
-        script(src="/js/index.js")
+        section(class="large")
+            -for (var i = 0; i < 16; i++) 
+                .container
+                    canvas(id="chart"+(i+1), class="canvas")
+        section(class="additional")
+            -for (var k = 16; k < 22; k++) 
+                .container
+                    canvas(id="chart"+(k+1), class="canvas")
+        
+    script
+        include ../js/libraries/socket.io.js
+    script
+        include ../js/libraries/Chart.bundle.min.js
+    script
+        include ../js/libraries/chartjs-plugin-datalabels.min.js
+    script
+        include ../js/index.js
