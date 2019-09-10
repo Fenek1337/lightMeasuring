@@ -8,6 +8,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const mqtt = require("mqtt");
 const socketio = require("socket.io");
+const nodemailer = require("nodemailer");
 const path = require("path");
 const bodyParser = require("body-parser");
 const chalk = require("chalk");
@@ -26,6 +27,16 @@ const PORT = process.env.SRV_PORT || 3000;
 
 // initialize express
 const app = express();
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.NODEMAILER_EMAIL,
+        pass: process.env.NODEMAILER_PASSWORD
+    }
+});
+
+
 
 // define actual time
 let now = `[${moment().format("HH:mm:ss | DD-M-YYYY")}]`;
@@ -100,8 +111,26 @@ const server = http.createServer(app);
 // socketio by http instance
 const io = socketio.listen(server).sockets;
 
-io.on("connection", () => {
+io.on("connection", (socket) => {
     log("info", "socket.io", "Established connection with client");
+    socket.on("send-mail", (data) => {
+        const mailOptions = {
+            from: {
+                name: "lightMeasuring",
+                address: process.env.NODEMAILER_EMAIL
+            },
+            to: ["kubatkh@gmail.com", "ctzg12@gmail.com"],
+            subject: "Pomiar światła",
+            text: JSON.stringify(data)
+        }
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.error(err);
+            } else {
+                console.log(info);
+            }
+        })
+    });
 });
 
 // connect to mqtt broker
