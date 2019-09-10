@@ -57,9 +57,12 @@ nav input[type="radio"] {
 
 nav button {
   cursor: pointer;
+  -webkit-transition: 0.05s;
+  transition: 0.05s;
+  outline: none;
 }
 
-nav button[type="submit"] {
+nav .button-submit {
   height: 3rem;
   width: 9rem;
   border: none;
@@ -84,9 +87,9 @@ nav .button {
   transition: 0.05s;
 }
 
-nav .button:active {
-  -webkit-transform: scale(0.7);
-          transform: scale(0.7);
+nav button:active {
+  -webkit-transform: scale(0.85);
+          transform: scale(0.85);
 }
 
 main {

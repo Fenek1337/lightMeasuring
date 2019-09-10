@@ -44,9 +44,11 @@ nav {
 
     button {
         cursor: pointer;
+        transition: 0.05s;
+        outline: none;
     }
 
-    button[type="submit"] {
+    .button-submit {
         height: 3rem;
         width: 9rem;
         border: none;
@@ -71,8 +73,8 @@ nav {
         
     }
 
-    .button:active {
-        transform: scale(0.7);
+    button:active {
+        transform: scale(0.85);
     }
 }
 
