@@ -115,19 +115,13 @@ const buttonRight = document.getElementById("right");
 const buttonSubmit = document.getElementById("submit");
 const form = document.getElementById("form");
 
-
-
 socket.on("connect", () => {
     socket.on("lux", (data) => {
         manageCharts(charts[data.sensorShort - 1], data.measurement);
     });
-
-
 });
 
 let pos = "left";
-
-
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -162,5 +156,3 @@ buttonRight.addEventListener("click", () => {
         buttonSubmit.classList.add("red");
     }
 });
-
-
