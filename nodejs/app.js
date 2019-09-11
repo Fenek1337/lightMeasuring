@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const mqtt = require("mqtt");
 const socketio = require("socket.io");
 const nodemailer = require("nodemailer");
+const excel = require("exceljs");
 const path = require("path");
 const bodyParser = require("body-parser");
 const chalk = require("chalk");
@@ -28,6 +29,7 @@ const PORT = process.env.SRV_PORT || 3000;
 // initialize express
 const app = express();
 
+//gmail auth options
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -36,10 +38,9 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-
-
-// define actual time
+// define format time
 let now = `[${moment().format("HH:mm:ss | DD-M-YYYY")}]`;
+
 function updateTime() {
     now = `[${moment().format("HH:mm:ss | DD-M-YYYY")}]`;
 }
@@ -60,6 +61,38 @@ function log(type = "info", app = "server", text) {
     } else {
         console.log(`${chalk.cyan(now)} ${chalk.green(type)} ${chalk.magentaBright(`${app}:`)} ${text}`);
     }
+}
+
+async function createExcelFile(schoolClass, weather, side, results) {
+    const workbook = new excel.Workbook();
+    const worksheet = workbook.addWorksheet("Measurements");
+    worksheet.mergeCells("D1:E1");
+    worksheet.mergeCells("D2:E2");
+    const arr = ["Class", "Date", "Time", "Weather", "Sensors"];
+    for (var i = 0; i < Object.keys(results).length; i++) {
+        if (side === "ALL") {
+            arr.push(Object.keys(results)[i]);
+        } else {
+            arr.push(`${side}${Object.keys(results)[i]}`);
+        }
+    }
+    const firstRow = worksheet.getRow(1);
+    for (var k = 0; k < arr.length; k++) {
+        if (k < 4) {
+            firstRow.getCell(k + 1).value = arr[k];
+        } else {
+            firstRow.getCell(k + 2).value = arr[k];
+        }
+    }
+    const secondRow = worksheet.getRow(2);
+    secondRow.getCell(1).value = schoolClass;
+    secondRow.getCell(2).value = moment().format("DD.M.YYYY");
+    secondRow.getCell(3).value = moment().format("HH:mm:ss");
+    secondRow.getCell(4).value = weather;
+    for (var j = 0; j < Object.keys(results).length; j++) {
+        secondRow.getCell(j + 7).value = results[Object.keys(results)[j]];
+    }
+    await workbook.xlsx.writeFile(`worksheet.xlsx`);
 }
 
 // handle process close
@@ -114,22 +147,26 @@ const io = socketio.listen(server).sockets;
 io.on("connection", (socket) => {
     log("info", "socket.io", "Established connection with client");
     socket.on("send-mail", (data) => {
+        createExcelFile(data.class, data.weather, data.side, data.results);
         const mailOptions = {
             from: {
                 name: "lightMeasuring",
                 address: process.env.NODEMAILER_EMAIL
             },
-            to: ["kubatkh@gmail.com", "ctzg12@gmail.com"],
+            to: process.env.NODEMAILER_TO.split(","),
             subject: "Pomiar światła",
-            text: JSON.stringify(data)
+            text: "Sprawdź załącznik",
+            attachments: [{ path: 'worksheet.xlsx' }]
         }
         transporter.sendMail(mailOptions, (err, info) => {
             if (err) {
-                console.error(err);
+                log("error", "nodemailer", err);
+                io.emit("email-confirmation", "Failed to send email.");
             } else {
-                console.log(info);
+                log("info", "nodemailer", "Email sent successfully.");
+                io.emit("email-confirmation", "Email sent successfully.");
             }
-        })
+        });
     });
 });
 
