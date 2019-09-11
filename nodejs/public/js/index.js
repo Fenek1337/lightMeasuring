@@ -119,22 +119,28 @@ socket.on("connect", () => {
     socket.on("lux", (data) => {
         manageCharts(charts[data.sensorShort - 1], data.measurement);
     });
+    socket.on("email-confirmation", (data) => {
+        if (data === "Email sent successfully.") {
+            alertify.success(data);
+        } else if (data === "Failed to send email.") {
+            alertify.error(data);
+        }
+    });
 });
 
 let pos = "left";
-
 form.addEventListener("submit", (event) => {
     event.preventDefault();
     const emailValues = {};
-    for (let k = 0; k < charts.length; k++) {
-        if (charts[k].data.datasets[0].data[charts[k].data.datasets[0].data.length - 1] === undefined) {
-            emailValues[k] = "Value inside chart not found";
-        } else {
-            emailValues[k] = charts[k].data.datasets[0].data[charts[k].data.datasets[0].data.length - 1];
-        }
-
-    }
+    emailValues.class = document.querySelector('input[name="class"]').value;
+    emailValues.weather = document.querySelector('input[name="weather"]').value;
     emailValues.side = document.querySelector('input[name="side"]:checked').value;
+    emailValues.results = {};
+    for (let k = 0; k < charts.length; k++) {
+        if (charts[k].data.datasets[0].data[charts[k].data.datasets[0].data.length - 1] !== undefined) {
+            emailValues.results[k] = charts[k].data.datasets[0].data[charts[k].data.datasets[0].data.length - 1];
+        }
+    }
     socket.emit("send-mail", emailValues);
 });
 
@@ -147,6 +153,7 @@ buttonLeft.addEventListener("click", () => {
         buttonSubmit.classList.remove("red");
     }
 });
+
 buttonRight.addEventListener("click", () => {
     if (pos === "left") {
         window.scrollBy(window.innerWidth, 0);
