@@ -1,5 +1,9 @@
 extends layouts/default.pug
 
+block css
+    link(rel="stylesheet", href="/css/alertify/alertify.min.css", type="text/css")
+    link(rel="stylesheet", href="/css/alertify/themes/default.min.css", type="text/css")
+
 block script
     script.
         const titlePage = !{JSON.stringify(title)};
@@ -18,6 +22,12 @@ block content
                     label(for="radio-left") Left side
                     input(type="radio", name="side", value="R" id="radio-right" class="radio")
                     label(for="radio-right") Right side
+                    input(type="radio", name="side", value="ALL" id="radio-all" class="radio")
+                    label(for="radio-all") All
+                    label(for="text-weather") Weather:
+                    input(type="text", name="weather", id="text-weather" class="text" placeholder="e.g. Sunny" required)
+                    label(for="text-class") Class:
+                    input(type="text", name="class", id="text-class" class="class" placeholder="e.g. 105B" required)
                     button(id="submit" class="button-submit" type="submit") Send email
             li
                 button(class="button" id="right") >
@@ -37,5 +47,7 @@ block content
         include ../js/libraries/Chart.bundle.min.js
     script
         include ../js/libraries/chartjs-plugin-datalabels.min.js
+    script
+        include ../js/libraries/alertify.min.js
     script
         include ../js/index.js

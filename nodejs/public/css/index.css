@@ -22,7 +22,7 @@ nav {
   background-color: rgba(31, 37, 53, 0.7);
   position: fixed;
   width: 100%;
-  z-index: 99999999;
+  z-index: 100;
   padding: 2.5rem 0;
 }
 
@@ -53,6 +53,49 @@ nav label {
 
 nav input[type="radio"] {
   margin: 0 .6rem;
+}
+
+nav input[type="text"] {
+  margin: 0 1rem 0 0;
+  height: 2.9rem;
+  background: none;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #303952;
+  color: #ecf0f1;
+  font-size: 1.2rem;
+}
+
+nav input[type="text"]::-webkit-input-placeholder {
+  color: #ecf0f1;
+  font-size: 1.2rem;
+  padding: 5px;
+  padding-bottom: 20px;
+}
+
+nav input[type="text"]:-ms-input-placeholder {
+  color: #ecf0f1;
+  font-size: 1.2rem;
+  padding: 5px;
+  padding-bottom: 20px;
+}
+
+nav input[type="text"]::-ms-input-placeholder {
+  color: #ecf0f1;
+  font-size: 1.2rem;
+  padding: 5px;
+  padding-bottom: 20px;
+}
+
+nav input[type="text"]::placeholder {
+  color: #ecf0f1;
+  font-size: 1.2rem;
+  padding: 5px;
+  padding-bottom: 20px;
+}
+
+nav input[type="text"]:focus {
+  border-bottom: 1px solid #33d9b2;
 }
 
 nav button {
