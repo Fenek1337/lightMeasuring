@@ -62,6 +62,30 @@ const settings = {
         }
     }
 }
+// function insertText(chartReference, text) {
+//     const p = document.createElement("p");
+//     p.setAttribute("class", "error");
+//     p.innerHTML = text;
+//     const parent = chartReference.canvas.parentNode;
+//     parent.insertBefore(p, chartReference.canvas);
+// }
+
+// function updateChartStatus(chart, status) {
+//     console.log(chart);
+//     console.log(chart.canvas.parentNode);
+//     chart.status = status;
+//     if (status === "rendered") {
+//         insertText(chart, "Missing database records and inactive device.");
+//     } else if (status === "preloaded") {
+//         insertText(chart, "Inactive device.");
+//     } else if (status === "missingSensor") {
+//         insertText(chart, "Trouble with sensor.");
+//     }
+// }
+//rendered
+//preloaded
+//missingSensor
+//live
 
 const settingsAdditional = settings;
 settingsAdditional.data.datasets.borderColor = "rgba(252, 92, 101,1.0)";
@@ -79,12 +103,10 @@ for (var i = 0; i < charts.length; i++) {
     } else {
         charts[i] = new Chart(ctx[i], JSON.parse(JSON.stringify(settingsAdditional)));
     }
-
     charts[i].options.title.text = `Lux${i + 1}`;
 }
 
 // TODO: zrobić funkcję, która będzie sprawdzać czy przez Socket przechodzi dany topic.
-// TODO: zrobić funkcję, która będzie zwracać średnie z godziny z pojedynczych/wszystkich czujników.
 
 function manageCharts(chart, msg) {
     if (chart.data.labels.length != 5) {
@@ -110,6 +132,7 @@ for (let arr in queries) {
     }
     i = 0;
 }
+
 const buttonLeft = document.getElementById("left");
 const buttonRight = document.getElementById("right");
 const buttonSubmit = document.getElementById("submit");
@@ -162,4 +185,8 @@ buttonRight.addEventListener("click", () => {
         buttonRight.classList.add("red");
         buttonSubmit.classList.add("red");
     }
+});
+
+window.addEventListener("beforeunload", () => {
+    window.scrollTo(0, 0);
 });
