@@ -71,9 +71,9 @@ async function createExcelFile(schoolClass, weather, side, results) {
     const arr = ["Class", "Date", "Time", "Weather", "Sensors"];
     for (var i = 0; i < Object.keys(results).length; i++) {
         if (side === "ALL") {
-            arr.push(Object.keys(results)[i]);
+            arr.push(i + 1);
         } else {
-            arr.push(`${side}${Object.keys(results)[i]}`);
+            arr.push(`${side}${i + 1}`);
         }
     }
     const firstRow = worksheet.getRow(1);
@@ -182,12 +182,14 @@ mqttClient.on("connect", () => {
 mqttClient.on("message", (topic, message) => {
     const messageObject = JSON.parse(String(message));
     messageObject.measurement = Number(messageObject.measurement).toFixed(2);
-    const messageToSave = new measurementSchema({
-        deviceNameShort: messageObject.sensorShort,
-        deviceNameLong: messageObject.sensorLong,
-        value: messageObject.measurement
-    });
-    messageToSave.save();
+    if (messageObject.measurement !== "-1.00") {
+        const messageToSave = new measurementSchema({
+            deviceNameShort: messageObject.sensorShort,
+            deviceNameLong: messageObject.sensorLong,
+            value: messageObject.measurement
+        });
+        messageToSave.save();
+    }
     io.emit("lux", messageObject);
 });
 
